@@ -15,7 +15,7 @@ COPY business-partner/API_BUSINESS_PARTNER.patch .
 RUN patch API_BUSINESS_PARTNER.edmx API_BUSINESS_PARTNER.patch
 
 ## Node.js app
-FROM node:8
+FROM node:20
 
 WORKDIR /usr/src/app
 
