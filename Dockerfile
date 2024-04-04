@@ -2,7 +2,7 @@
 ## ----
 
 ## Builder to hide credentials from image
-FROM alpine:latest AS builder
+FROM --platform=linux/amd64 alpine:latest AS builder
 
 RUN apk add patch curl libxml2-utils
 
@@ -15,7 +15,7 @@ COPY business-partner/API_BUSINESS_PARTNER.patch .
 RUN patch API_BUSINESS_PARTNER.edmx API_BUSINESS_PARTNER.patch
 
 ## Node.js app
-FROM node:20
+FROM --platform=linux/amd64 node:20
 
 WORKDIR /usr/src/app
 
