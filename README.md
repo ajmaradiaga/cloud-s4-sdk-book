@@ -7,6 +7,22 @@ The mock server can be used as a stand-in for simple tests and experiments with 
 It is especially tailored towards the examples found in the book [_Extending SAP S/4HANA Cloud_](https://www.sap-press.com/extending-sap-s4hana_4655/) or in the [tutorials of the SAP S/4HANA Cloud SDK](https://blogs.sap.com/2017/05/10/first-steps-with-sap-s4hana-cloud-sdk/).
 This page explains how to run the mock server and how to integrate it into the tests of the sample application.
 
+
+## How does this fork differs from the [original repository that has been archived](https://github.com/SAP-archive/cloud-s4-sdk-book/tree/mock-server)?
+The mock server here has been extended to support sending BP Created events to an HTTP endpoint. This can be useful when you would like to simulate an S/4HANA Cloud system generating events and posting these events to an event broker such as SAP Integration Suite, advanced event mesh (aem). The service will generate a compliant CloudEvent message and post it to the HTTP endpoint.
+
+It now support the following environment variables:
+```text
+# This file contains the environment variables that are required to send events to SAP Integration Suite, advanced event mesh. 
+# Posting messages to the REST API of an event broker service
+SIMULATE_BP_CREATED=true
+SIMULATE_EVENTS_URL=https://mr-connection-d73fbvfvam3.messaging.solace.cloud:9443/sap/S4HANAOD/S4D/ce/sap/s4/beh/businesspartner/v1/BusinessPartner/Created/v1
+SIMULATE_EVENTS_USERNAME=solace-cloud-client
+SIMULATE_EVENTS_PASSWORD=nhop1ewuomo60jwbx6pr5aqnum
+SIMULATE_BP_CREATED_CRON="*/30 * * * * *"
+SIMULATE_BP_CREATED_REPEAT_LOOP=true
+```
+
 > **Note**: the server is not secured in any way. Run the server on your own risk and only for experiments. Do not use the server to store any personal data - only use fake data.
 
 ## How to run the server
@@ -60,6 +76,9 @@ docker build --build-arg API_KEY=[YOUR_API_BUSINESS_HUB_API_KEY] --tag s4-mock-s
 
 # Run the image
 docker run -p 8080:8080 s4-mock-server
+
+# Run the image passing environment variables
+docker run -p 8080:8080 --env-file ./.env  s4-mock-server
 ```
 
 ### On SAP Business Technology Platform, Cloud Foundry
