@@ -51,6 +51,9 @@ const startPosting = (cronSchedule, url, auth, data) => {
         if (currentItemIndex < data.length) {
             const item = data[currentItemIndex++];
             post_data(url, auth, { item });
+        } else if (process.env.SIMULATE_BP_CREATED_REPEAT_LOOP === 'true') {
+            // Restarting the loop
+            currentItemIndex = 0;
         }
     });
 };
