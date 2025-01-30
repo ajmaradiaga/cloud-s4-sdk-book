@@ -18,3 +18,5 @@ integration-tests/time-off/
 vdm-output-tmp/
 .DS_Store
 .env
+*.env
+manifest-*.yml
