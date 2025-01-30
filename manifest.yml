@@ -1,7 +1,7 @@
 ---
 applications:
 - name: odata-mock-server
-  memory: 64M
+  memory: 128M
   buildpacks:
   - nodejs_buildpack
   routes:
