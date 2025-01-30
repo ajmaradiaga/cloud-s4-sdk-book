@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 
 const bupaApi = require('./business-partner/business-partner-api.js');
@@ -25,19 +26,14 @@ app.use('/sap/opu/odata/sap/YY1_BPSOCIALMEDIA_CDS', socialMediaApi);
 app.use('/sap/opu/odata/sap/API_MANAGE_WORKFORCE_TIMESHEET', timeSheetApi);
 app.use('/odata/v2', timeOff);
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', function(req, res) {
-    res.set('Content-Type', 'text/html');
-    res.send(`<html>
-    <head>
-        <title>OData Mock Service for Business Partner API of SAP S/4HANA Cloud</title>
-    </head>
-    <body>
-        <div>OData mock service for Business Partner API of SAP S/4HANA Cloud is running at <a href="/sap/opu/odata/sap/API_BUSINESS_PARTNER">/sap/opu/odata/sap/API_BUSINESS_PARTNER</a>.</div>
-        <div>OData mock service for Business Partner Social Media custom API is running at <a href="/sap/opu/odata/sap/YY1_BPSOCIALMEDIA_CDS">/sap/opu/odata/sap/YY1_BPSOCIALMEDIA_CDS</a>.</div>
-        <div>OData mock service for Timesheet API is running at <a href="/sap/opu/odata/sap/API_MANAGE_WORKFORCE_TIMESHEET">/sap/opu/odata/sap/API_MANAGE_WORKFORCE_TIMESHEET</a>.</div>
-        <div>OData mock service for Employee Central Time Off service of SAP SuccessFactors is running at <a href="/odata/v2/EmployeeTime">/odata/v2/EmployeeTime</a>.</div>
-    </body>
-</html>`);
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/create-bp', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'create-bp.html'));
 });
 
 module.exports = app;

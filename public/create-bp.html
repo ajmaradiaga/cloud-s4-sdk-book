@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Business Partner</title>
+    <script
+      id="sap-ui-bootstrap"
+      src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+      data-sap-ui-theme="sap_fiori_3"
+      data-sap-ui-libs="sap.m"
+      data-sap-ui-async="true"
+      data-sap-ui-compatVersion="edge"
+      data-sap-ui-preload="async"
+    ></script>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: white;
+      }
+      .sapUiSmallMargin {
+        margin: 10px 0;
+      }
+      .form-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body class="sapUiBody">
+    <header>
+      <img
+        src="./img/sap-codejam.png"
+        alt="SAP CodeJam Logo"
+        style="width: 200px"
+      />
+    </header>
+    <div class="form-container">
+      <h1 class="sapUiSmallMargin">Create Business Partner</h1>
+      <form id="bupaForm" class="sapUiForm sapUiSmallMargin">
+        <div class="sapUiFormGroup">
+          <label for="firstName" class="sapUiLabel">First Name:</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            class="sapUiInput"
+            required
+          /><br /><br />
+        </div>
+        <div class="sapUiFormGroup">
+          <label for="lastName" class="sapUiLabel">Last Name:</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            class="sapUiInput"
+            required
+          /><br /><br />
+        </div>
+        <div class="sapUiFormGroup">
+          <label for="country" class="sapUiLabel">Country:</label>
+          <select id="country" name="country" class="sapUiInput" required>
+            <option value="">Select a country</option>
+            <option value="CA">Canada</option>
+            <option value="CN">China</option>
+            <option value="DE">Germany</option>
+            <option value="FR">France</option>
+            <option value="IN">India</option>
+            <option value="ES">Spain</option>
+            <option value="US">United States</option>
+            <!-- Add more countries as needed --></select
+          ><br /><br />
+        </div>
+        <div class="sapUiFormGroup">
+          <label for="sapCommunityUsername" class="sapUiLabel"
+            >SAP Community Username:</label
+          >
+          <input
+            type="text"
+            id="sapCommunityUsername"
+            name="sapCommunityUsername"
+            class="sapUiInput"
+            required
+          /><br /><br />
+        </div>
+        <br />
+        <button type="submit" class="sapUiButton sapUiButtonAccept">
+          Create
+        </button>
+      </form>
+    </div>
+    <br /><br />
+    <label id="bpCreatedId" class="sapUiLabel sapUiSmallMargin"></label>
+
+    <script>
+      document
+        .getElementById("bupaForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const firstName = document.getElementById("firstName").value;
+          const lastName = document.getElementById("lastName").value;
+          const fullName = `${firstName} ${lastName}`;
+          const country = document.getElementById("country").value;
+          const sapCommunityUsername = document.getElementById(
+            "sapCommunityUsername"
+          ).value;
+
+          fetch("/sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartner", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                "Basic RURQX0NvZGVKYW06RmVuaXgtVGltZWxlc3MtTWFjaGluZTM=",
+            },
+            body: JSON.stringify({
+              BusinessPartnerFullName: fullName,
+              BusinessPartnerName: fullName,
+              FirstName: firstName,
+              LastName: lastName,
+              NameCountry: country,
+              YY1_SAPCommunityUsername: sapCommunityUsername,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              document.getElementById("firstName").value = "";
+              document.getElementById("lastName").value = "";
+
+              const bpCreatedId = data.d.BusinessPartner;
+              alert(`Business Partner ${bpCreatedId} created successfully!`);
+              document.getElementById(
+                "bpCreatedId"
+              ).innerText = `Last BP Created: ${bpCreatedId}`;
+              console.log(bpCreatedId);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+    </script>
+  </body>
+</html>
