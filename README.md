@@ -15,12 +15,19 @@ It now support the following environment variables:
 ```text
 # This file contains the environment variables that are required to send events to SAP Integration Suite, advanced event mesh. 
 # Posting messages to the REST API of an event broker service
+BP_API_AUTHORIZATION_REQUIRED=true
+BP_API_USERNAME=my_username
+BP_API_PASSWORD=my_password
+EVENT_BROKER_URL=https://mr-connection-d73fbvfvam3.messaging.solace.cloud:9443/sap/S4HANAOD/S4D/ce/sap/s4/beh/businesspartner/v1/BusinessPartner/Created/v1
+EVENT_BROKER_USERNAME=solace-cloud-client
+EVENT_BROKER_PASSWORD=nhop1ewuomo60jwbx6pr5aqnum
 SIMULATE_BP_CREATED=true
-SIMULATE_EVENTS_URL=https://mr-connection-d73fbvfvam3.messaging.solace.cloud:9443/sap/S4HANAOD/S4D/ce/sap/s4/beh/businesspartner/v1/BusinessPartner/Created/v1
-SIMULATE_EVENTS_USERNAME=solace-cloud-client
-SIMULATE_EVENTS_PASSWORD=nhop1ewuomo60jwbx6pr5aqnum
 SIMULATE_BP_CREATED_CRON="*/30 * * * * *"
 SIMULATE_BP_CREATED_REPEAT_LOOP=true
+BP_CREATED_TOPIC=default/sap.s4/SID/ce/sap/s4/beh/businesspartner/v1/BusinessPartner/Created/v1
+TRIGGER_BP_CREATED_EVENT=true
+CUSTOM_BP_CREATED_TOPIC=my/custom/ZBUSINESSPARTNER/Created/v1
+TRIGGER_CUSTOM_BP_CREATED_EVENT=true
 ```
 
 > **Note**: the server is not secured in any way. Run the server on your own risk and only for experiments. Do not use the server to store any personal data - only use fake data.
