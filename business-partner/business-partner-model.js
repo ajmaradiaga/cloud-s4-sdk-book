@@ -77,6 +77,7 @@ module.exports = {
             "BusinessPartnerIDByExtSystem": "",
             "YY1_AddrLastCheckedOn_bus": null,
             "YY1_AddrLastCheckedBy_bus": "",
+            "YY1_SAPCommunityUsername": "",
             "to_BuPaIdentification": {
                 "results": []
             },
@@ -99,19 +100,24 @@ module.exports = {
             "to_Supplier": null
         });
     },
-    getBusinessPartners: function () {
-        return this.data;
+    getBusinessPartners: function (skip = 0, top = 100, creatingBP = false) {
+        if (creatingBP){
+            return this.data
+        }
+
+        return this.data.slice(skip, skip + top);
     },
     findBusinessPartner: function (id) {
-        return this.getBusinessPartners().find(function (element) {
+        return this.getBusinessPartners(null, null, true).find(function (element) {
             return element.BusinessPartner == id;
         });
     },
     createAndAddBusinessPartner: function(businessPartnerInput) {
-        const newId = nextBusinessPartnerId(this.getBusinessPartners());
+        allBPs = this.getBusinessPartners(null, null, true);
+        const newId = nextBusinessPartnerId(allBPs);
         const newBusinessPartner = this.newBusinessPartner(newId);
         Object.assign(newBusinessPartner, businessPartnerInput);
-        this.getBusinessPartners().push(newBusinessPartner);
+        allBPs.push(newBusinessPartner);
         return newBusinessPartner;
     },
     deleteBusinessPartner: function(id) {
