@@ -124,7 +124,7 @@ module.exports = {
         if(!this.findBusinessPartner(id)) {
             throw new Error(`Cannot delete business partner: business partner with ID ${id} does not exist.`);
         }
-        this.data = this.getBusinessPartners()
+        this.data = this.getBusinessPartners(null, null, true)
             .filter( (bupa) => bupa.BusinessPartner != id );
     },
     modifyBusinessPartner: function(id, businessPartnerInput) {
@@ -139,7 +139,7 @@ module.exports = {
     },
 
     getAddresses: function() {
-        return this.getBusinessPartners()
+        return this.getBusinessPartners(null, null, true)
             .map( (bupa) => bupa.to_BusinessPartnerAddress.results)
             .reduce( (acc,val) => acc.concat(val) , []);
     },

@@ -45,10 +45,20 @@ const retrieveAllBusinessPartners = function (req, res, next) {
     return;
   }
 
-  skip = parseInt(req.query.$skip) || 0;
-  top = parseInt(req.query.$top) || 100;
+  var skip = 0;
+  var top = 100;
+  var allBPs = false;
 
-  res.result = bupaModel.getBusinessPartners(skip, top);
+  if (req.query.$filter) {
+    skip = null;
+    top = null;
+    allBPs = true;
+  } else {
+    skip = parseInt(req.query.$skip) || 0;
+    top = parseInt(req.query.$top) || 100;
+  }
+
+  res.result = bupaModel.getBusinessPartners(skip, top, allBPs);
   next();
 };
 
