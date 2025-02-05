@@ -39,7 +39,7 @@ const raiseBPCreatedEvent = (url, topic, auth, item) => {
         console.error(error);
     });
 
-    req.write(event.toString());
+    req.write(JSON.stringify(event, null, 3));
     req.end();
 };
 
@@ -86,7 +86,7 @@ const raiseCustomBPCreatedEvent = (url, topic, auth, item) => {
         console.error(error);
     });
 
-    req.write(event.toString());
+    req.write(JSON.stringify(event, null, 3));
     req.end();
 };
 
