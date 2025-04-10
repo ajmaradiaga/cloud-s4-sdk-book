@@ -16,7 +16,7 @@ const raiseBPCreatedEvent = (url, topic, auth, item) => {
 
     const event = new CloudEvent({
         type: 'sap.s4.beh.businesspartner.v1.BusinessPartner.Created.v1',
-        specversion: '1.1',
+        specversion: '1.0',
         source: '/default/sap.s4.beh/244572008',
         datacontenttype: 'application/json',
         data: {
@@ -55,26 +55,26 @@ const raiseCustomBPCreatedEvent = (url, topic, auth, item) => {
     bp = item['item'];
     bpId = bp['BusinessPartner'];
 
-    sapCommunityUsername = bp['YY1_SAPCommunityUsername'];
+    sapCommunityDisplayName = bp['YY1_SAPCommunityDisplayName'];
 
     // Including topic in URL
-    url += `${topic}/${sapCommunityUsername}`;
+    url += `${topic}/${sapCommunityDisplayName}`;
 
     const event = new CloudEvent({
         type: 'cust.ext.codejam.ZBUSINESSPARTNER.Created.v1',
-        specversion: '1.1',
+        specversion: '1.0',
         source: '/default/sap.s4.beh/244572008',
-        'sapcommunityusername': sapCommunityUsername,
+        sapcommunitydispname: sapCommunityDisplayName,
         datacontenttype: 'application/json',
         data: {
             BusinessPartner: bpId,
             FirstName: bp['FirstName'],
             LastName: bp['LastName'],
-            YY1_SAPCommunityUsername: sapCommunityUsername
+            YY1_SAPCommunityDisplayName: sapCommunityDisplayName
         }
     });
 
-    console.log(`Posting event for Business Partner ${bpId} to ${topic}`);
+    console.log(`Posting event for Business Partner ${bpId} to ${topic}/${sapCommunityDisplayName}`);
 
     const req = https.request(url, options, (res) => {
         res.on('data', (d) => {

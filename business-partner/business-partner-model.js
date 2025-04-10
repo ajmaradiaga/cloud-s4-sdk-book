@@ -77,7 +77,7 @@ module.exports = {
             "BusinessPartnerIDByExtSystem": "",
             "YY1_AddrLastCheckedOn_bus": null,
             "YY1_AddrLastCheckedBy_bus": "",
-            "YY1_SAPCommunityUsername": "",
+            "YY1_SAPCommunityDisplayName": "",
             "to_BuPaIdentification": {
                 "results": []
             },

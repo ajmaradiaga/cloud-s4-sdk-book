@@ -81,13 +81,13 @@
           ><br /><br />
         </div>
         <div class="sapUiFormGroup">
-          <label for="sapCommunityUsername" class="sapUiLabel"
-            >SAP Community Username:</label
+          <label for="sapCommunityDisplayName" class="sapUiLabel"
+            >SAP Community Display Name:</label
           >
           <input
             type="text"
-            id="sapCommunityUsername"
-            name="sapCommunityUsername"
+            id="sapCommunityDisplayName"
+            name="sapCommunityDisplayName"
             class="sapUiInput"
             required
           /><br /><br />
@@ -110,8 +110,8 @@
           const lastName = document.getElementById("lastName").value;
           const fullName = `${firstName} ${lastName}`;
           const country = document.getElementById("country").value;
-          const sapCommunityUsername = document.getElementById(
-            "sapCommunityUsername"
+          const sapCommunityDisplayName = document.getElementById(
+            "sapCommunityDisplayName"
           ).value;
 
           fetch("/sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartner", {
@@ -127,7 +127,7 @@
               FirstName: firstName,
               LastName: lastName,
               NameCountry: country,
-              YY1_SAPCommunityUsername: sapCommunityUsername,
+              YY1_SAPCommunityDisplayName: sapCommunityDisplayName,
             }),
           })
             .then((response) => response.json())
